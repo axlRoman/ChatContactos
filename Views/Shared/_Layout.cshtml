@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tu Aplicación</title>
+    
+    <!-- CSS existente de tu aplicación -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    
+    <!-- CSS del Chat -->
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+    
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Tu header existente -->
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <!-- Tu footer existente -->
+    </footer>
+
+    <!-- Chat Widget -->
+    <div ng-app="chatApp">
+        <lia-chat></lia-chat>
+    </div>
+
+    <!-- Scripts existentes de tu aplicación -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <!-- Script del Chat -->
+    <script src="~/js/chat/chat.module.js" asp-append-version="true"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

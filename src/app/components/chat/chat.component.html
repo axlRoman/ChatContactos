@@ -1,0 +1,90 @@
+<div class="chat-widget">
+  <!-- Chat Bubble -->
+  <div class="chat-bubble" (click)="toggleChat()" [class.active]="isOpen">
+    <i class="fas fa-comments"></i>
+  </div>
+
+  <!-- Chat Container -->
+  <div class="chat-container" [class.open]="isOpen">
+    <!-- Contacts Panel -->
+    <div class="contacts" [class.show]="showContacts">
+      <div class="contacts-header">
+        <h2>Contactos</h2>
+        <i class="fas fa-times" (click)="toggleContacts()"></i>
+      </div>
+      
+      <div class="contacts-list">
+        <div 
+          class="contact" 
+          *ngFor="let contact of contacts"
+          (click)="selectContact(contact)"
+          [class.active]="activeContact?.id === contact.id"
+        >
+          <div class="pic" [style.background-image]="'url(' + contact.avatar + ')'"></div>
+          <div class="badge" *ngIf="contact.unreadCount">{{ contact.unreadCount }}</div>
+          <div class="contact-info">
+            <div class="name">{{ contact.name }}</div>
+            <div class="description">{{ contact.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div class="chat" [class.contacts-open]="showContacts">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <i class="fas fa-bars" (click)="toggleContacts()"></i>
+        <div class="contact-bar" *ngIf="activeContact">
+          <div class="pic" [style.background-image]="'url(' + activeContact.avatar + ')'"></div>
+          <div class="contact-info">
+            <div class="name">{{ activeContact.name }}</div>
+            <div class="seen">{{ getCurrentTime() }}</div>
+          </div>
+        </div>
+        <i class="fas fa-times" (click)="toggleChat()"></i>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages" #messagesContainer>
+        <div class="time">{{ getCurrentTime() }}</div>
+        
+        <div 
+          class="message" 
+          *ngFor="let message of messages"
+          [class.user]="message.type === 'user'"
+          [class.agent]="message.type === 'agent'"
+        >
+        <div [innerHTML]="message.text"></div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="message agent typing-message" *ngIf="isTyping">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input">
+        <input 
+          type="text" 
+          [(ngModel)]="newMessage"
+          (keypress)="onKeyPress($event)"
+          placeholder="Escribe un mensaje..."
+          [disabled]="isTyping"
+        />
+        <i 
+          class="fas fa-paper-plane" 
+          (click)="sendMessage()"
+          [class.disabled]="!newMessage.trim() || isTyping"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
