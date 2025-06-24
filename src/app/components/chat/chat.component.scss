@@ -42,10 +42,10 @@ $shadow-dark: rgba(0, 0, 0, 0.5);
   }
 
   &.active {
-    background: #007bff;
+    background: #36456d;
     
     i {
-      transform: rotate(180deg);
+      transform: rotate(360deg);
     }
   }
 }
@@ -54,8 +54,8 @@ $shadow-dark: rgba(0, 0, 0, 0.5);
   position: absolute;
   bottom: 5rem;
   right: 0;
-  width: 24rem;
-  height: 38rem;
+  width: 25vw;
+  height: 80vh;
   background: $white;
   border-radius: 1rem;
   box-shadow: 0 0 8rem 0 $shadow, 0 2rem 4rem -3rem $shadow-dark;

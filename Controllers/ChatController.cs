@@ -74,15 +74,15 @@ namespace YourApp.Controllers
                 // Ejecutar la petición
                 var response = await _restClient.ExecuteAsync(restRequest);
 
-                if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
+                if (response.IsSuccessful && !string.IsNullOrEmpty(response.Data))
                 {
                     // Intentar deserializar la respuesta de n8n
                     try
                     {
-                        var n8nResponse = JsonSerializer.Deserialize<N8nResponse>(response.Content);
+                        var n8nResponse = JsonSerializer.Deserialize<N8nResponse>(response.Data);
                         return Ok(new ChatResponse
                         {
-                            Message = n8nResponse?.Message ?? response.Content,
+                            Message = n8nResponse?.Message ?? response.Data,
                             Success = true
                         });
                     }
@@ -91,7 +91,7 @@ namespace YourApp.Controllers
                         // Si no se puede deserializar, devolver el contenido como texto
                         return Ok(new ChatResponse
                         {
-                            Message = response.Content,
+                            Message = response.Data,
                             Success = true
                         });
                     }
